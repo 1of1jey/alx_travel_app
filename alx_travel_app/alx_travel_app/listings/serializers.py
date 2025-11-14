@@ -87,7 +87,7 @@ class BookingSerializer(serializers.ModelSerializer):
             'check_out_date', 'number_of_guests', 'total_price', 'status', 
             'created_at', 'updated_at', 'special_requests', 'duration_nights'
         ]
-        read_only_fields = ['booking_id', 'created_at', 'updated_at', 'guest']
+        read_only_fields = ['booking_id', 'created_at', 'updated_at', 'guest', 'status']
     
     def get_duration_nights(self, obj):
         """Get the number of nights for the booking."""
