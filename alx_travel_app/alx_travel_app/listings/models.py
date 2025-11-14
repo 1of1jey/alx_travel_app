@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator
 import uuid
 
@@ -137,12 +138,6 @@ class Booking(models.Model):
         return f"Booking {self.booking_id} - {self.listing.title}"
     
     def clean(self):
-        from django.core.exceptions import ValidationError
-        
-        if self.check_in_date and self.check_out_date:
-            if self.check_out_date <= self.check_in_date:
-                raise ValidationError("Check-out date must be after check-in date.")
-        
         if self.number_of_guests and self.listing:
             if self.number_of_guests > self.listing.max_guests:
                 raise ValidationError(
