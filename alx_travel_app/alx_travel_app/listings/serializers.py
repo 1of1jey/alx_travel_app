@@ -88,7 +88,6 @@ class BookingSerializer(serializers.ModelSerializer):
             'created_at', 'updated_at', 'special_requests', 'duration_nights'
         ]
         read_only_fields = ['booking_id', 'created_at', 'updated_at', 'guest', 'total_price', 'status']
-        read_only_fields = ['booking_id', 'created_at', 'updated_at', 'guest', 'status']
     
     def get_duration_nights(self, obj):
         """Get the number of nights for the booking."""
@@ -96,7 +95,6 @@ class BookingSerializer(serializers.ModelSerializer):
     
     def validate(self, data):
         """Custom validation for booking data."""
-        from django.utils import timezone
         from datetime import date
         
         check_in_date = data.get('check_in_date')
@@ -236,7 +234,7 @@ class ReviewCreateSerializer(serializers.ModelSerializer):
     
     def validate(self, data):
         """Use the same validation as ReviewSerializer."""
-        return ReviewSerializer(context=self.context).validate(data)
+        return ReviewSerializer(instance=self.instance, context=self.context).validate(data)
     
     def create(self, validated_data):
         """Use the same creation logic as ReviewSerializer."""
