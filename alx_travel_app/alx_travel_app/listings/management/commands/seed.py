@@ -135,7 +135,7 @@ class Command(BaseCommand):
         created_count = 0
         for i in range(count):
             try:
-                listing = Listing.objects.create(
+                Listing.objects.create(
                     title=random.choice(titles),
                     description=random.choice(descriptions),
                     location=random.choice(locations),
@@ -197,7 +197,7 @@ class Command(BaseCommand):
                 # Calculate total price
                 total_price = listing.price_per_night * duration
                 
-                booking = Booking.objects.create(
+                Booking.objects.create(
                     listing=listing,
                     guest=guest,
                     check_in_date=start_date,
