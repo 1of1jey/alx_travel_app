@@ -87,7 +87,7 @@ class BookingSerializer(serializers.ModelSerializer):
             'check_out_date', 'number_of_guests', 'total_price', 'status', 
             'created_at', 'updated_at', 'special_requests', 'duration_nights'
         ]
-        read_only_fields = ['booking_id', 'created_at', 'updated_at', 'guest']
+        read_only_fields = ['booking_id', 'created_at', 'updated_at', 'guest', 'total_price', 'status']
     
     def get_duration_nights(self, obj):
         """Get the number of nights for the booking."""
@@ -160,27 +160,6 @@ class BookingSerializer(serializers.ModelSerializer):
         validated_data['total_price'] = listing.price_per_night * nights
         
         return super().create(validated_data)
-
-
-class BookingCreateSerializer(serializers.ModelSerializer):
-    """Simplified serializer for creating bookings."""
-    
-    listing_id = serializers.UUIDField()
-    
-    class Meta:
-        model = Booking
-        fields = [
-            'listing_id', 'check_in_date', 'check_out_date', 
-            'number_of_guests', 'special_requests'
-        ]
-    
-    def validate(self, data):
-        """Use the same validation as BookingSerializer."""
-        return BookingSerializer().validate(data)
-    
-    def create(self, validated_data):
-        """Use the same creation logic as BookingSerializer."""
-        return BookingSerializer(context=self.context).create(validated_data)
 
 
 class ReviewSerializer(serializers.ModelSerializer):
